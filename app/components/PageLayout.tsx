@@ -1,4 +1,4 @@
-import {Await, Link} from '@remix-run/react';
+import {Await, Link, useLoaderData} from '@remix-run/react';
 import {Suspense, useId} from 'react';
 import type {
   CartApiQueryFragment,
@@ -14,7 +14,7 @@ import {
   SearchFormPredictive,
 } from '~/components/SearchFormPredictive';
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
-import FooterSection from './FooterSection';
+import {defer, json, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 
 interface PageLayoutProps {
   cart: Promise<CartApiQueryFragment | null>;
@@ -23,6 +23,7 @@ interface PageLayoutProps {
   isLoggedIn: Promise<boolean>;
   publicStoreDomain: string;
   children?: React.ReactNode;
+  recommendedProducts?: any;
 }
 
 export function PageLayout({
@@ -58,7 +59,25 @@ export function PageLayout({
 
 function CartAside({cart}: {cart: PageLayoutProps['cart']}) {
   return (
-    <Aside type="cart" heading="CART">
+    <Aside
+      type="cart"
+      heading={
+        <Suspense fallback="Your Bag (Loading...)">
+          <Await resolve={cart}>
+            {(cart) => {
+              return (
+                <>
+                  Your Bag
+                  <span className="ml-3 text-lg inline-block h-[36px] w-[36px] text-white bg-[#1b1f23] rounded-full text-center leading-[36px]">
+                    {cart?.totalQuantity}
+                  </span>
+                </>
+              );
+            }}
+          </Await>
+        </Suspense>
+      }
+    >
       <Suspense fallback={<p>Loading cart ...</p>}>
         <Await resolve={cart}>
           {(cart) => {

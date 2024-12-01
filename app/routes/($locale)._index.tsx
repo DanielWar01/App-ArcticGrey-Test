@@ -161,7 +161,7 @@ function HeaderVideo({videoPath}: {videoPath: string}) {
 }
 
 const FEATURED_COLLECTION_QUERY = `#graphql
-  fragment FeaturedCollection on Collection {
+  fragment FeaturedCollectionHomePage on Collection {
     id
     title
     description
@@ -174,18 +174,18 @@ const FEATURED_COLLECTION_QUERY = `#graphql
     }
     handle
   }
-  query FeaturedCollection($country: CountryCode, $language: LanguageCode)
+  query FeaturedCollectionHomePage($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
     collections(first: 5, sortKey: UPDATED_AT, reverse: true) {
       nodes {
-        ...FeaturedCollection
+        ...FeaturedCollectionHomePage
       }
     }
   }
 ` as const;
 
-const RECOMMENDED_PRODUCTS_QUERY = `#graphql
-  fragment RecommendedProduct on Product {
+export const RECOMMENDED_PRODUCTS_QUERY = `#graphql
+  fragment RecommendedProductHomePage on Product {
     id
     title
     handle
@@ -205,11 +205,11 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
       }
     }
   }
-  query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
+  query RecommendedProductsHomePage ($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
     products(first: 4, sortKey: UPDATED_AT, reverse: true) {
       nodes {
-        ...RecommendedProduct
+        ...RecommendedProductHomePage
       }
     }
   }
