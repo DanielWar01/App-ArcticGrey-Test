@@ -27,7 +27,6 @@ export function CartMain({
   // The useOptimisticCart hook applies pending actions to the cart
   // so the user immediately sees feedback when they modify the cart.
   const cart = useOptimisticCart(originalCart);
-  console.log(recommendedProducts);
 
   const linesCount = Boolean(cart?.lines?.nodes?.length || 0);
   const withDiscount =
@@ -36,11 +35,8 @@ export function CartMain({
   const className = `cart-main ${withDiscount ? 'with-discount' : ''} z-50`;
   const cartHasItems = cart?.totalQuantity! > 0;
 
-  const price = cart?.cost?.subtotalAmount;
-
   return (
     <div className={className}>
-      <ShippingBar price={price as Pick<MoneyV2, 'amount' | 'currencyCode'>} />
       <CartEmpty hidden={linesCount} layout={layout} />
       <div className="cart-details mt-5">
         <div
