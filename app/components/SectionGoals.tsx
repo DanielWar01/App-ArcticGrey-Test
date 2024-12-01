@@ -1,4 +1,4 @@
-import {FeaturedCollectionFragment} from 'storefrontapi.generated';
+import type {FeaturedCollectionFragment} from 'storefrontapi.generated';
 import CardGoal from './CardGoal';
 
 export default function SectionGoals({
