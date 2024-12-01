@@ -35,8 +35,10 @@ export function CartMain({
   const className = `cart-main ${withDiscount ? 'with-discount' : ''} z-50`;
   const cartHasItems = cart?.totalQuantity! > 0;
 
+  const price = cart.cost?.subtotalAmount;
   return (
     <div className={className}>
+      <ShippingBar price={price} />
       <CartEmpty hidden={linesCount} layout={layout} />
       <div className="cart-details mt-5">
         <div

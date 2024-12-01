@@ -1,12 +1,12 @@
 import {Money} from '@shopify/hydrogen';
 import type {MoneyV2} from '@shopify/hydrogen/storefront-api-types';
 
-export default function ShippingBar({
-  price,
-}: {
-  price: Pick<MoneyV2, 'currencyCode' | 'amount'>;
-}) {
-  const percent = (parseFloat(price.amount) / 120) * 100;
+export default function ShippingBar({price}: {price: any}) {
+  const percent = (parseFloat(price?.amount) / 120) * 100;
+  if (!price) {
+    return null;
+  }
+
   return (
     <div className="flex flex-col gap-3">
       <p className="flex gap-1.5">
