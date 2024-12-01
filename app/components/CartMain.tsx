@@ -6,6 +6,7 @@ import {CartLineItem} from '~/components/CartLineItem';
 import {CartSummary} from './CartSummary';
 import ShippingBar from './ShippingBar';
 import type {MoneyV2} from '@shopify/hydrogen/storefront-api-types';
+import {useEffect} from 'react';
 
 export type CartLayout = 'page' | 'aside';
 
@@ -35,7 +36,15 @@ export function CartMain({
   const className = `cart-main ${withDiscount ? 'with-discount' : ''} z-50`;
   const cartHasItems = cart?.totalQuantity! > 0;
 
-  const price = cart.cost?.subtotalAmount;
+  const price = cart?.cost?.subtotalAmount ?? 0;
+
+  // Opción 2: Usar un hook de efecto para inicialización
+  useEffect(() => {
+    if (!cart) {
+      // Lógica de carga o manejo de carrito vacío
+      console.log('Carrito no inicializado');
+    }
+  }, [cart]);
   return (
     <div className={className}>
       <ShippingBar price={price} />
