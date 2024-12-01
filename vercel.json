@@ -1,9 +1,0 @@
-{
-    "builds": [
-      {
-        "src": "dist/server/index.js",
-        "use": "@vercel/node"
-      }
-    ],
-    "outputDirectory": "dist/server"
-}
