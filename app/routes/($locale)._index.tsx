@@ -9,7 +9,12 @@ import {
 import {Suspense} from 'react';
 import {json} from '@shopify/remix-oxygen';
 import {Image, Money} from '@shopify/hydrogen';
-import type {RecommendedProductsQuery} from 'storefrontapi.generated';
+import type {
+  BlogQuery,
+  BlogsQuery,
+  GetCollectionProductsQuery,
+  RecommendedProductsQuery,
+} from 'storefrontapi.generated';
 import MarqueeBand from '~/components/MarqueeBand';
 import SectionBrands from '~/components/BrandsSection';
 import SectionGoals from '~/components/SectionGoals';
@@ -66,11 +71,13 @@ async function loadCriticalData({request, context}: LoaderFunctionArgs) {
   ]);
 
   return {
-    featuredCollection: featuredCollections.collections,
-    supplementsCollection: supplementsCollection.collectionByHandle,
-    bundleCollection: bundleCollection.collectionByHandle,
+    featuredCollection: {
+      collections: featuredCollections,
+    },
+    supplementsCollection,
+    bundleCollection,
     proteinBlend: proteinBlend.products,
-    blogsInfomration: blogsInformation,
+    blogsInformation,
   };
 }
 
@@ -119,14 +126,18 @@ export default function Homepage() {
       <HeaderVideo videoPath={'/hero_video.mp4'} />
       <MarqueeBand />
       <SectionBrands images={data.imageMetaObject} />
-      <SectionGoals collection={data.featuredCollection} />
-      <SectionCollections collection={productsSuplements} />
+      <SectionGoals collection={data.featuredCollection.collections} />
+      <SectionCollections
+        collection={productsSuplements as GetCollectionProductsQuery}
+      />
       <SectionHealthFitness />
-      <ResultsSection collection={productsSuplements} />
+      <ResultsSection
+        collection={productsSuplements as GetCollectionProductsQuery}
+      />
       <BundleSection collection={data.bundleCollection} />
       <CustomizeProteinSection proteins={data.proteinBlend.edges} />
       <PlungeSection image={data.imageMetaObjectPlunge} />
-      <BlogSection blogs={data.blogsInfomration} />
+      <BlogSection blogs={data.blogsInformation as BlogQuery} />
       <InstagramSection />
     </div>
   );

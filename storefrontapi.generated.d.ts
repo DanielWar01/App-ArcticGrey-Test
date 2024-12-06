@@ -304,21 +304,22 @@ export type FeaturedCollectionHomePageQueryVariables = StorefrontAPI.Exact<{
 
 export type FeaturedCollectionHomePageQuery = {
   collections: {
-    nodes: Array<
-      Pick<
-        StorefrontAPI.Collection,
-        'id' | 'title' | 'description' | 'handle'
-      > & {
-        image?: StorefrontAPI.Maybe<
-          Pick<
-            StorefrontAPI.Image,
-            'id' | 'url' | 'altText' | 'width' | 'height'
-          >
-        >;
-      }
-    >;
-  };
+    nodes: Array<{
+      id: string;
+      title: string;
+      description: string;
+      handle: string;
+      image?: {
+        id?: string;
+        url: string;
+        altText?: string;
+        width?: number;
+        height?: number;
+      };
+    }>;
+  }
 };
+
 
 export type RecommendedProductHomePageFragment = Pick<
   StorefrontAPI.Product,
@@ -559,38 +560,33 @@ export type BlogQueryVariables = StorefrontAPI.Exact<{
   >;
 }>;
 
-export type BlogQuery = {
-  blog?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Blog, 'title'> & {
-      seo?: StorefrontAPI.Maybe<
-        Pick<StorefrontAPI.Seo, 'title' | 'description'>
-      >;
-      articles: {
-        nodes: Array<
-          Pick<
-            StorefrontAPI.Article,
-            'contentHtml' | 'handle' | 'id' | 'publishedAt' | 'title'
-          > & {
-            author?: StorefrontAPI.Maybe<
-              Pick<StorefrontAPI.ArticleAuthor, 'name'>
-            >;
-            image?: StorefrontAPI.Maybe<
-              Pick<
-                StorefrontAPI.Image,
-                'id' | 'altText' | 'url' | 'width' | 'height'
-              >
-            >;
-            blog: Pick<StorefrontAPI.Blog, 'handle'>;
-          }
-        >;
-        pageInfo: Pick<
-          StorefrontAPI.PageInfo,
-          'hasPreviousPage' | 'hasNextPage' | 'endCursor' | 'startCursor'
-        >;
-      };
-    }
-  >;
-};
+export interface BlogQuery {
+  blog: {
+    title: string;
+    articles: {
+      nodes: Array<{
+        title: string;
+        handle: string;
+        tags: string[];
+        publishedAt: string;
+        seo?: {
+          title: string;
+          description: string;
+        } | null; // Admite null
+        image?: {
+          url: string;
+          width: number;
+          height: number;
+          altText: string | null; // Admite null
+        } | null; // Admite null
+        authorV2?: {
+          name: string;
+        } | null; // Admite null
+      }>;
+    };
+  }
+}
+
 
 export type ArticleItemFragment = Pick<
   StorefrontAPI.Article,

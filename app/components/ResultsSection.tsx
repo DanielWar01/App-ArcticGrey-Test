@@ -73,7 +73,7 @@ export default function ResultsSection({
           }}
           className="swimlane-2 mx-10"
         >
-          {collection?.products.edges.slice(0, 6).map(
+          {collection?.collectionByHandle?.products.edges.slice(0, 6).map(
             ({node}, index) =>
               node && (
                 <SwiperSlide key={node.id} className="h-full w-auto">

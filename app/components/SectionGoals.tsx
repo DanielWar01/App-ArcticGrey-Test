@@ -1,10 +1,10 @@
-import type {FeaturedCollectionFragment} from 'storefrontapi.generated';
+import type {FeaturedCollectionHomePageQuery} from 'storefrontapi.generated';
 import CardGoal from './CardGoal';
 
 export default function SectionGoals({
   collection,
 }: {
-  collection: FeaturedCollectionFragment;
+  collection: FeaturedCollectionHomePageQuery;
 }) {
   return (
     <section className="w-full">
@@ -16,7 +16,7 @@ export default function SectionGoals({
         </p>
       </div>
       <div className="mt-10 mx-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
-        {collection.nodes.map((node) => (
+        {collection.collections.nodes.map((node) => (
           <CardGoal key={node.id} data={node} />
         ))}
       </div>

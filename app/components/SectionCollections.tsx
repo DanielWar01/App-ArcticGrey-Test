@@ -33,7 +33,7 @@ export default function SectionCollections({
 
         <p className="">🌟 Trending</p>
         <h3 className="text-[40px] font-[500] text-[#1B1F23]">
-          {collection?.title}
+          {collection?.collectionByHandle?.title}
         </h3>
         <Link to="/collections/supplements" className="underline btn-view-all">
           View All
@@ -57,7 +57,7 @@ export default function SectionCollections({
           }}
           className="swimlane"
         >
-          {collection?.products.edges.map((product) => (
+          {collection?.collectionByHandle?.products.edges.map((product) => (
             <SwiperSlide key={product.node.id} className="h-full">
               <ProductCard product={product.node} />
             </SwiperSlide>

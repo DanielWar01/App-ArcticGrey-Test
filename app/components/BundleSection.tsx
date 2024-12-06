@@ -6,7 +6,6 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import {Navigation, A11y} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import {useEffect, useState} from 'react';
 
 export default function BundleSection({
   collection,
@@ -113,7 +112,7 @@ export default function BundleSection({
           }}
           className="swimlane"
         >
-          {collection?.products.edges.map((product) => (
+          {collection?.collectionByHandle?.products.edges.map((product) => (
             <SwiperSlide key={product.node.id} className="h-full">
               <ProductCard product={product.node} />
             </SwiperSlide>

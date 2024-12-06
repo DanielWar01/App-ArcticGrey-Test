@@ -1,5 +1,4 @@
 import {Image, Money} from '@shopify/hydrogen';
-import type {FragmentProductInformation} from 'storefrontapi.generated';
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
 
@@ -7,7 +6,7 @@ export default function ResultCard({
   product,
   videoPath,
 }: {
-  product: FragmentProductInformation;
+  product: any;
   videoPath: string;
 }) {
   const selectedVariant = product.variants.edges[0].node;
